@@ -1,5 +1,7 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../config";
+import Employee from "./Employee";
+import Customer from "./Customer"
 
 const User = sequelize.define(
   'users',
@@ -44,5 +46,19 @@ const User = sequelize.define(
     updatedAt: 'updated_at'
   }
 );
+User.belongsTo(Employee, {
+  as: 'employee',
+  foreignKey: {
+    name: 'idEmployee',
+    field: 'id_employee'
+  }
+});
+User.belongsTo(Customer, {
+  as: 'customer',
+  foreignKey: {
+    name: 'idCustomer',
+    field: 'id_customer'
+  }
+});
 
 export default User;

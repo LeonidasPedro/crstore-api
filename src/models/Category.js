@@ -1,9 +1,8 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../config";
-import Category from "./Category";
-
-const Item = sequelize.define(
-  'items',
+import Item from "./Item";
+const Category = sequelize.define(
+  'categories',
   {
     id: {
       type: DataTypes.INTEGER,
@@ -12,10 +11,6 @@ const Item = sequelize.define(
     },
     name: {
       type: DataTypes.STRING,
-      allowNull: false
-    },
-    price: {
-      type: DataTypes.NUMERIC(15,2),
       allowNull: false
     }
   },
@@ -26,13 +21,5 @@ const Item = sequelize.define(
     updatedAt: 'updated_at'
   }
 );
-Item.belongsTo(Category, {
-  as: 'category',
-  foreignKey: {
-    name: 'idCategory',
-    allowNull: false,
-    field: 'id_category'
-  }
-});
 
-export default Item;
+export default Category;

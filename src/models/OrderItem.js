@@ -1,18 +1,16 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../config";
-import Category from "./Category";
+import Item from "./Item";
+import Order from "./Order";
 
-const Item = sequelize.define(
-  'items',
+
+const OrderItem = sequelize.define(
+  'order_items',
   {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true
-    },
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false
     },
     price: {
       type: DataTypes.NUMERIC(15,2),
@@ -26,12 +24,20 @@ const Item = sequelize.define(
     updatedAt: 'updated_at'
   }
 );
-Item.belongsTo(Category, {
-  as: 'category',
+OrderItem.belongsTo(Order, {
+  as: 'order',
   foreignKey: {
-    name: 'idCategory',
+    name: 'idOrder',
     allowNull: false,
-    field: 'id_category'
+    field: 'id_order'
+  }
+});
+OrderItem.belongsTo(Item, {
+  as: 'item',
+  foreignKey: {
+    name: 'idItem',
+    allowNull: false,
+    field: 'id_item'
   }
 });
 
