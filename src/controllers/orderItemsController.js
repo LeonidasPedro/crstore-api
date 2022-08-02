@@ -1,8 +1,8 @@
-import Item from "../models/Item";
+import OrderItem from "../models/OrderItem";
 
 const getAll = async (req, res) => {
   try {
-    const response = await Item.findAll({
+    const response = await OrderItem.findAll({
       order: [['id', 'ASC']]
     });
     return res.status(200).send({
@@ -31,7 +31,7 @@ const getById = async (req, res) => {
       });
     }
 
-    let response = await Item.findOne({
+    let response = await OrderItem.findOne({
       where: {
         id
       }
@@ -40,7 +40,7 @@ const getById = async (req, res) => {
     if (!response) {
       return res.status(200).send({
         type:'error',
-        message: `Não foi encontrado Item com o id ${id}`
+        message: `Não foi encontrada entrega com o id ${id}`
       });
     }
 
@@ -71,26 +71,24 @@ const persist = async (req, res) => {
 }
 
 const create = async (data, res) => {
-  let { name, price, idCategory } = data;
+  let { price, idOrder, idItem, idPaymentMethod } = data;
 
-  let response = await Item.create({
-    name,
-    price,
-    idCategory
+  let response = await OrderItem.create({
+    price, idOrder, idItem, idPaymentMethod
   });
   return res.status(201).send(response)
 }
 
 const update = async (id, data, res) => {
-  let { name, price, idCategory } = data;
-  let response = await Item.findOne({
+  let { price, idOrder, idItem, idPaymentMethod } = data;
+  let response = await OrderItem.findOne({
     where: {
       id
     }
   });
 
   if (!response) {
-    return res.status(200).send({  type:'error',message: `Não foi encontrado nenhum entregador com o id ${id}` })
+    return res.status(200).send({  type:'error',message: `Não foi encontrado nenhua entrega com o id ${id}` })
   }
   //TODO: desenvolver uma lógica pra validar todos os campos
   //que vieram para atualizar e entao atualizar
@@ -98,7 +96,7 @@ const update = async (id, data, res) => {
 
   await response.save();
   return res.status(200).send({
-    message: `Entregador ${id} atualizado com sucesso`,
+    message: `Entrega ${id} atualizado com sucesso`,
     data: response
   });
 }
@@ -110,11 +108,11 @@ const destroy = async (req, res) => {
     id = id ? id.toString().replace(/\D/g, '') : null;//toString
     if (!id) {
       return res.status(200).send({
-        message: 'Informe um id válido para deletar o item'
+        message: 'Informe um id válido para deletar o OrderItem'
       });
     }
 
-    let response = await Item.findOne(
+    let response = await OrderItem.findOne(
     {
       where: {
         id
@@ -123,12 +121,12 @@ const destroy = async (req, res) => {
     });
 
     if (!response) {
-      return res.status(200).send({ message: `Não foi encontrado item com o id ${id}` })
+      return res.status(200).send({ message: `Não foi encontrada entrega com o id ${id}` })
     }
 
     await response.destroy();
     return res.status(200).send({
-      message: `Item id ${id} deletado com sucesso`
+      message: `Entrega id ${id} deletado com sucesso`
     })
   } catch (error) {
     return res.status(200).send({

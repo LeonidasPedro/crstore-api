@@ -2,6 +2,7 @@ import { DataTypes } from "sequelize";
 import { sequelize } from "../config";
 import Item from "./Item";
 import Order from "./Order";
+import PaymentMethod from "./PaymentMethod";
 
 
 const OrderItem = sequelize.define(
@@ -26,7 +27,7 @@ const OrderItem = sequelize.define(
 );
 OrderItem.belongsTo(Order, {
   as: 'order',
-  foreignKey: {
+  onDelete: 'NO ACTION', onUpdate: 'NO ACTION', foreignKey: {
     name: 'idOrder',
     allowNull: false,
     field: 'id_order'
@@ -34,11 +35,21 @@ OrderItem.belongsTo(Order, {
 });
 OrderItem.belongsTo(Item, {
   as: 'item',
-  foreignKey: {
+  onDelete: 'NO ACTION', onUpdate: 'NO ACTION', foreignKey: {
     name: 'idItem',
     allowNull: false,
     field: 'id_item'
   }
 });
+OrderItem.belongsTo(PaymentMethod, {
+  as: 'paymentMethod',
+  onDelete: 'NO ACTION', 
+  onUpdate: 'NO ACTION', 
+  foreignKey: {
+    name: 'idPaymentMethod',
+    allowNull: false,
+    field: 'id_payment_method'
+  }
+});
 
-export default Item;
+export default OrderItem;

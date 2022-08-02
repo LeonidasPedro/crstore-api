@@ -1,8 +1,9 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../config";
-import Item from "./Item";
-const Category = sequelize.define(
-  'categories',
+
+
+const PaymentMethod = sequelize.define(
+  'payment_methods',
   {
     id: {
       type: DataTypes.INTEGER,
@@ -10,10 +11,10 @@ const Category = sequelize.define(
       autoIncrement: true
     },
     name: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      unique: true
+      type: DataTypes.STRING(30),
+      allowNull: false
     }
+    
   },
   {
     freezeTableName: true,
@@ -23,4 +24,4 @@ const Category = sequelize.define(
   }
 );
 
-export default Category;
+export default PaymentMethod;

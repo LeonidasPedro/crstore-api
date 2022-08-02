@@ -20,6 +20,37 @@ const getAll = async (req, res) => {
     });
   }
 }
+const getById = async (req, res) => {
+  try {
+    let { id } = req.params;
+
+    //garante que o id só vai ter NUMEROS;
+    id = id.replace(/\D/g, '');
+    if (!id) {
+      return res.status(400).send({
+        message: 'Informe um id válido para consulta'
+      });
+    }
+
+    let response = await User.findOne({
+      where: {
+        id
+      }
+    });
+
+    if (!response) {
+      return res.status(400).send({
+        message: `Não foi encontrado nenhum usuário com o id ${id}`
+      });
+    }
+
+    return res.status(200).send(response);
+  } catch (error) {
+    return res.status(500).send({
+      message: error.message
+    })
+  }
+}
 
 const register = async (req, res) => {
   try {
@@ -82,7 +113,7 @@ const login = async (req, res) => {
     let token = jwt.sign(
       { userId: user.id, username: user.username }, //payload - dados utilizados na criacao do token
       process.env.TOKEN_KEY, //chave PRIVADA da aplicação 
-      { expiresIn: '1h' } //options ... em quanto tempo ele expira...
+      { expiresIn: '8h' } //options ... em quanto tempo ele expira...
     );
 
     user.token = token;
@@ -104,6 +135,7 @@ const login = async (req, res) => {
 
 export default {
   getAll,
+  getById,
   register,
   login
 }

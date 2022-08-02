@@ -43,7 +43,7 @@ const Adress = sequelize.define(
 );
 Adress.belongsTo(User, {
   as: 'adresses',
-  foreignKey: {
+  onDelete: 'NO ACTION', onUpdate: 'NO ACTION', foreignKey: {
     name: 'idAdress',
     allowNull: false,
     field: 'id_adress'
