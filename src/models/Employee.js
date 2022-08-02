@@ -23,7 +23,9 @@ const Employee = sequelize.define(
 );
 Employee.belongsTo(User, {
   as: 'user',
-  onDelete: 'NO ACTION', onUpdate: 'NO ACTION', foreignKey: {
+  onDelete: 'NO ACTION', 
+  onUpdate: 'NO ACTION', 
+  foreignKey: {
     name: 'idUser',
     field: 'id_user'
   }

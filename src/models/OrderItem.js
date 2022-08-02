@@ -27,7 +27,9 @@ const OrderItem = sequelize.define(
 );
 OrderItem.belongsTo(Order, {
   as: 'order',
-  onDelete: 'NO ACTION', onUpdate: 'NO ACTION', foreignKey: {
+  onDelete: 'NO ACTION', 
+  onUpdate: 'NO ACTION', 
+  foreignKey: {
     name: 'idOrder',
     allowNull: false,
     field: 'id_order'
@@ -35,7 +37,9 @@ OrderItem.belongsTo(Order, {
 });
 OrderItem.belongsTo(Item, {
   as: 'item',
-  onDelete: 'NO ACTION', onUpdate: 'NO ACTION', foreignKey: {
+  onDelete: 'NO ACTION', 
+  onUpdate: 'NO ACTION', 
+  foreignKey: {
     name: 'idItem',
     allowNull: false,
     field: 'id_item'
