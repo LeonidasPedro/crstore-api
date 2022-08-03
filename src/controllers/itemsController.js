@@ -3,7 +3,8 @@ import Item from "../models/Item";
 const getAll = async (req, res) => {
   try {
     const response = await Item.findAll({
-      order: [['id', 'ASC']]
+      include:'category',
+      order: [['id', 'ASC']],
     });
     return res.status(200).send({
       type: 'success', // success, error, warning, info

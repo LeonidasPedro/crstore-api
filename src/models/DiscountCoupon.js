@@ -15,7 +15,7 @@ const DiscountCoupon = sequelize.define(
       allowNull: false
     },
     code: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING(20),
       allowNull:false
     },
     type: {

@@ -8,7 +8,6 @@ import cors from 'cors';
 require('./models/index');
 
 const app = express();
-
 const accessLogStream = fs.createWriteStream(
   path.join(__dirname, '../access.log'),
   { flags: 'a' }
@@ -21,6 +20,7 @@ const corsOptions = {
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
   credentials: true
 };
+
 
 app.use(cors(corsOptions));
 app.use(morgan('combined', { stream: accessLogStream }));

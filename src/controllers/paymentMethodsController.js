@@ -39,7 +39,7 @@ const getById = async (req, res) => {
 
     if (!response) {
       return res.status(400).send({
-        message: `Não foi encontrada Metodo de pagamento com o id ${id}`
+        message: `Não foi encontrado Metodo de pagamento com o id ${id}`
       });
     }
 
@@ -86,7 +86,7 @@ const update = async (id, data, res) => {
   });
 
   if (!response) {
-    return res.status(400).send({ type: 'error', message: `Não foi encontrado Metodo de pagamento com o id ${id}` })
+    return res.status(200).send({ type: 'error', message: `Não foi encontrado Metodo de pagamento com o id ${id}` })
   }
   //TODO: desenvolver uma lógica pra validar todos os campos
   //que vieram para atualizar e entao atualizar
@@ -107,7 +107,7 @@ const destroy = async (req, res) => {
     if (!id) {
       return res.status(200).send({
         type:"error",
-        message: 'Informe um id válido para deletar a Metodo de pagamento'
+        message: 'Informe um id válido para deletar a método de pagamento'
       });
     }
 
