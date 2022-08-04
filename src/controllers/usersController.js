@@ -2,6 +2,33 @@ import User from "../models/User";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
+const getUserByToken = async (authorization) => {
+  if (!authorization) {
+    return null;
+  }
+
+  const token = authorization.split(' ')[1] || null;
+  console.log(token);
+  const decodedToken = jwt.decode(token);
+ 
+  if (!decodedToken) {
+    return null;
+  }
+
+  let user = await User.findOne({
+    where: {
+      id: decodedToken.userId
+    }
+  })
+
+  if (!user) {
+    return null;
+  }
+
+  return user;
+}
+
+
 const getAll = async (req, res) => {
   try {
     const response = await User.findAll({
@@ -54,7 +81,7 @@ const getById = async (req, res) => {
 
 const register = async (req, res) => {
   try {
-    let { username, name, phone, password, role } = req.body;
+    let { username, name, phone, password, role, email } = req.body;
 
     let userExists = await User.findOne({
       where: {
@@ -76,7 +103,8 @@ const register = async (req, res) => {
       name,
       phone,
       passwordHash,
-      role
+      role,
+      email
     });
 
     return res.status(200).send({
@@ -137,5 +165,6 @@ export default {
   getAll,
   getById,
   register,
-  login
+  login,
+  getUserByToken
 }

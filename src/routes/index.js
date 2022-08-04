@@ -11,13 +11,13 @@ import paymentMethodsRoute from "./paymentMethodsRoute";
 
 
 function Routes(app) {
+	adressesRoute(app);
 	usersRoute(app);
 	itemsRoute(app);
 	categoriesRoute(app);
 	customerRoute(app);
 	orderItemsRoute(app);
-	employeesRoute(app);
-	adressesRoute(app);
+	employeesRoute(app);	
 	discountCouponsRoute(app)
 	paymentMethodsRoute(app)
 }

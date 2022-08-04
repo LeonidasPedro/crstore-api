@@ -1,8 +1,21 @@
 import Adress from "../models/Adress";
+import usersController from "./usersController";
+
 
 const getAll = async (req, res) => {
   try {
+
+    let user = await usersController.getUserByToken(req.headers.authorization);
+
+    if (!user) {
+      return res.status(200).send({
+        type: 'error',
+        message: 'Ocorreu um erro ao recuperar os seus dados'
+      })
+    }
+
     const response = await Adress.findAll({
+      where: {userId: user.id},
       order: [['id', 'ASC']]
     });
     return res.status(200).send({
@@ -21,6 +34,13 @@ const getAll = async (req, res) => {
 const getById = async (req, res) => {
   try {
     let { id } = req.params;
+    let user = await usersController.getUserByToken(req.headers.authorization);
+    if (!user) {
+      return res.status(200).send({
+        type: 'error',
+        message: 'Ocorreu um erro ao recuperar os seus dados'
+      })
+    }
 
     //garante que o id só vai ter NUMEROS;
     id = id.replace(/\D/g, '');
@@ -33,7 +53,8 @@ const getById = async (req, res) => {
 
     let response = await Adress.findOne({
       where: {
-        id
+        id,
+        userId: user.id
       }
     });
 
@@ -55,13 +76,23 @@ const getById = async (req, res) => {
 
 const persist = async (req, res) => {
   try {
+
     let { id } = req.params;
     //caso nao tenha id, cria um novo registro
+
+    let user = await usersController.getUserByToken(req.headers.authorization);
+
+    if (!user) {
+      return res.status(200).send({
+        type: 'error',
+        message: 'Ocorreu um erro ao recuperar os seus dados'
+      })
+    }
     if (!id) {
-      return await create(req.body, res)
+      return await create(req.body, res, user)
     }
 
-    return await update(id, req.body, res)
+    return await update(id, req.body, res, user)
   } catch (error) {
     return res.status(200).send({
       type:'error',
@@ -70,20 +101,21 @@ const persist = async (req, res) => {
   }
 }
 
-const create = async (data, res) => {
-  let { adress, cep, state, city, district } = data;
+const create = async (data, res, user) => {
+  let { adress, cep, state, city, district, number} = data;
 
   let response = await Adress.create({
-    adress, cep, state, city, district
+    number, adress, cep, state, city, district, userId: user.id
   });
   return res.status(201).send(response)
 }
 
-const update = async (id, data, res) => {
-  let { adress, cep, state, city, district } = data;
+const update = async (id, data, res, user) => {
+  let { adress, cep, state, city, district, number} = data;
   let response = await Adress.findOne({
     where: {
-      id
+      id,
+      userId: user.id
     }
   });
 
@@ -106,6 +138,16 @@ const destroy = async (req, res) => {
     let { id } = req.body;
     //garante que o id só vai ter NUMEROS;
     id = id ? id.toString().replace(/\D/g, '') : null;//toString
+
+    let user = await usersController.getUserByToken(req.headers.authorization);
+
+    if (!user) {
+      return res.status(200).send({
+        type: 'error',
+        message: 'Ocorreu um erro ao recuperar os seus dados'
+      })
+    }
+
     if (!id) {
       return res.status(200).send({
         message: 'Informe um id válido para deletar o endereço'
@@ -115,9 +157,10 @@ const destroy = async (req, res) => {
     let response = await Adress.findOne(
     {
       where: {
-        id
+        id,
+        userId: user.id
       }
-
+    
     });
 
     if (!response) {

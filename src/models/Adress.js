@@ -15,6 +15,11 @@ const Adress = sequelize.define(
       allowNull: false
       
     },
+    number: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+      
+    },
     cep: {
       type: DataTypes.STRING(11),
       allowNull: false
@@ -42,11 +47,13 @@ const Adress = sequelize.define(
   }
 );
 Adress.belongsTo(User, {
-  as: 'adresses',
-  onDelete: 'NO ACTION', onUpdate: 'NO ACTION', foreignKey: {
-    name: 'idAdress',
+  as: 'user',
+  onDelete: 'NO ACTION', 
+  onUpdate: 'NO ACTION', 
+  foreignKey: {
+    name: 'userId',
     allowNull: false,
-    field: 'id_adress'
+    field: 'id_user'
   }
 });
 
