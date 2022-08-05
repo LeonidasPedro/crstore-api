@@ -1,5 +1,25 @@
 import Item from "../models/Item";
 
+const getByCategory = async (req, res) => {
+  try {
+    let { idCategory } = req.body
+    const response = await Item.findAll({
+        where: {
+          idCategory
+        }
+    });
+    return res.status(200).send({
+      type: 'success', // success, error, warning, info
+      message: 'Registros recuperados com sucesso', // mensagem para o front exibir
+      data: response // json com informações de resposta
+    });
+  } catch (error) {
+    return res.status(200).send({
+      type: 'error',
+      message: `Não foi encontrado nenhum item na categoria id ${idCategory}`
+    });
+  }
+}
 const getAll = async (req, res) => {
   try {
     const response = await Item.findAll({
@@ -143,5 +163,6 @@ export default {
   getAll,
   getById,
   persist,
-  destroy
+  destroy,
+  getByCategory
 }
