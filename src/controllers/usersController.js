@@ -81,7 +81,7 @@ const getById = async (req, res) => {
 
 const register = async (req, res) => {
   try {
-    let { username, name, phone, password, role, email } = req.body;
+    let { username, name, phone, password, role, email, cart } = req.body;
 
     let userExists = await User.findOne({
       where: {
@@ -104,7 +104,8 @@ const register = async (req, res) => {
       phone,
       passwordHash,
       role,
-      email
+      email,
+      cart
     });
 
     return res.status(200).send({

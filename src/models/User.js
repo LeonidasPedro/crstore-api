@@ -39,6 +39,9 @@ const User = sequelize.define(
       type: DataTypes.STRING, // admin ou customer
       allowNull: false,
       defaultValue: 'customer'
+    },
+    cart:{
+      type:DataTypes.JSONB
     }
   },
   {
@@ -48,19 +51,4 @@ const User = sequelize.define(
     updatedAt: 'updated_at'
   }
 );
-// User.belongsTo(Employee, {
-//   as: 'employee',
-//   onDelete: 'NO ACTION', onUpdate: 'NO ACTION', foreignKey: {
-//     name: 'idEmployee',
-//     field: 'id_employee'
-//   }
-// });
-// User.belongsTo(Customer, {
-//   as: 'customer',
-//   onDelete: 'NO ACTION', onUpdate: 'NO ACTION', foreignKey: {
-//     name: 'idCustomer',
-//     field: 'id_customer'
-//   }
-// });
-
 export default User;

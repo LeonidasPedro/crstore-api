@@ -45,7 +45,8 @@ const getById = async (req, res) => {
 
     return res.status(200).send(response);
   } catch (error) {
-    return res.status(500).send({
+    return res.status(200).send({
+      type:"error",
       message: error.message
     })
   }
@@ -61,7 +62,8 @@ const persist = async (req, res) => {
 
     return await update(id, req.body, res)
   } catch (error) {
-    return res.status(500).send({
+    return res.status(200).send({
+      type:"error",
       message: error.message
     })
   }
@@ -86,7 +88,7 @@ const update = async (id, data, res) => {
   });
 
   if (!response) {
-    return res.status(400).send({ type: 'error', message: `Não foi encontrada categoria com o id ${id}` })
+    return res.status(200).send({ type: 'error', message: `Não foi encontrada categoria com o id ${id}` })
   }
   //TODO: desenvolver uma lógica pra validar todos os campos
   //que vieram para atualizar e entao atualizar
@@ -129,7 +131,7 @@ const destroy = async (req, res) => {
     })
   } catch (error) {
     return res.status(200).send({
-      type: error,
+      type: "error",
       message: error.message
     })
   }
