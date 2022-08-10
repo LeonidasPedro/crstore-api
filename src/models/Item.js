@@ -20,6 +20,9 @@ const Item = sequelize.define(
     },
     thumbnail:{
       type:DataTypes.STRING(500),
+    },
+    description:{
+      type:DataTypes.TEXT(5000)
     }
   },
   {

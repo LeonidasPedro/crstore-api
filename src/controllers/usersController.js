@@ -66,14 +66,16 @@ const getById = async (req, res) => {
     });
 
     if (!response) {
-      return res.status(400).send({
+      return res.status(200).send({
+        type:'error',
         message: `Não foi encontrado nenhum usuário com o id ${id}`
       });
     }
 
     return res.status(200).send(response);
   } catch (error) {
-    return res.status(500).send({
+    return res.status(200).send({
+      type:'error',
       message: error.message
     })
   }
