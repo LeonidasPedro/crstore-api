@@ -13,7 +13,6 @@ const getAll = async (req, res) => {
         message: 'Ocorreu um erro ao recuperar os seus dados'
       })
     }
-
     const response = await Adress.findAll({
       where: {userId: user.id},
       order: [['id', 'ASC']]
@@ -114,7 +113,7 @@ const update = async (id, data, res, user) => {
   let { adress, cep, state, city, district, number} = data;
   let response = await Adress.findOne({
     where: {
-      id,
+      id: id,
       userId: user.id
     }
   });
