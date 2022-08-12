@@ -6,7 +6,6 @@ const getAll = async (req, res) => {
   try {
 
     let user = await usersController.getUserByToken(req.headers.authorization);
-
     if (!user) {
       return res.status(200).send({
         type: 'error',
@@ -26,7 +25,6 @@ const getAll = async (req, res) => {
     return res.status(200).send({
       type: 'error',
       message: 'Ops! Ocorreu um erro!',
-      data: error
     });
   }
 }
@@ -80,7 +78,7 @@ const persist = async (req, res) => {
     //caso nao tenha id, cria um novo registro
 
     let user = await usersController.getUserByToken(req.headers.authorization);
-
+    console.log(user);
     if (!user) {
       return res.status(200).send({
         type: 'error',
@@ -106,7 +104,11 @@ const create = async (data, res, user) => {
   let response = await Adress.create({
     number, adress, cep, state, city, district, userId: user.id
   });
-  return res.status(201).send(response)
+  return res.status(201).send({
+    type:'success',
+    message: `Endereço atualizado com sucesso`,
+    data: response
+  });
 }
 
 const update = async (id, data, res, user) => {
@@ -127,7 +129,8 @@ const update = async (id, data, res, user) => {
 
   await response.save();
   return res.status(200).send({
-    message: `endereço ${id} atualizado com sucesso`,
+    type:'success',
+    message: `Endereço atualizado com sucesso`,
     data: response
   });
 }
@@ -168,6 +171,7 @@ const destroy = async (req, res) => {
 
     await response.destroy();
     return res.status(200).send({
+      type:'success',
       message: `endereço id ${id} deletado com sucesso`
     })
   } catch (error) {

@@ -19,10 +19,10 @@ const Item = sequelize.define(
       allowNull: false
     },
     thumbnail:{
-      type:DataTypes.STRING(500),
+      type:DataTypes.TEXT,
     },
     description:{
-      type:DataTypes.TEXT(5000)
+      type:DataTypes.TEXT
     }
   },
   {

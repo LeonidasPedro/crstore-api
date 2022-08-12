@@ -113,7 +113,7 @@ const update = async (id, data, res) => {
   });
 
   if (!response) {
-    return res.status(200).send({  type:'error',message: `Não foi encontrado nenhum entregador com o id ${id}` })
+    return res.status(200).send({  type:'error',message: `Não foi encontrado nenhum item com o id ${id}` })
   }
   //TODO: desenvolver uma lógica pra validar todos os campos
   //que vieram para atualizar e entao atualizar
@@ -121,7 +121,7 @@ const update = async (id, data, res) => {
 
   await response.save();
   return res.status(200).send({
-    message: `Entregador ${id} atualizado com sucesso`,
+    message: `Item atualizado com sucesso`,
     data: response
   });
 }

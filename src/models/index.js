@@ -8,8 +8,9 @@ import DiscountCoupon from "./DiscountCoupon";
 import Order from "./Order";
 import OrderItem from "./OrderItem";
 import PaymentMethod from "./PaymentMethod";
-
+import Cart from "./Cart";
 (async () => {
+   // await Cart.sync({ force: true })
    // await PaymentMethod.sync({ force: true })
    // await Category.sync({ force: true })
    // await Customer.sync({ force: true })
